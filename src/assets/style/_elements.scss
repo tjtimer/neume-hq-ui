@@ -1,0 +1,36 @@
+* {
+  padding: 0;
+  margin: 0 auto;
+  box-sizing: border-box;
+  position: relative;
+  transition: all 0.3s;
+}
+html, body {
+  font: normal 2vw 'Helvetica', 'Arial', 'sans-serif';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 2.1vw;
+}
+h3 {
+  font-size: 3vw;
+  font-weight: bold;
+}
+ul {
+  display: flex;
+  flex-flow: column;
+  list-style-type: none;
+}
+li {
+  display: flex;
+  flex: 1 auto;
+}
+
+a {
+  display: inline-flex;
+  flex: 1 auto;
+  color: $base-color;
+  padding: 0.4vw;
+  &:hover {
+    color: $active-color;
+  }
+}
