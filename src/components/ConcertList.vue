@@ -24,9 +24,10 @@ export default {
   computed: {
     concerts: () => Concert
                       .query()
-                      .orderBy('date', 'asc')
                       .with('venue')
-                      .all().map((c) => {
+                      .orderBy('date', 'asc')
+                      .all()
+                      .map((c) => {
                         if (c.venueId != null) {
                           return {
                             ...c,
@@ -38,7 +39,6 @@ export default {
   },
   methods: {
     valueClick: function({ id, key }) {
-      console.log(id, key);
       if (key === "venue") {
         if (this.venueDetailsAt.indexOf(id) < 0) {
           this.venueDetailsAt = [...this.venueDetailsAt, id];

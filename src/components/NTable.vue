@@ -3,15 +3,27 @@ import { formatError } from '@vuex-orm/plugin-graphql'
   ul.n-table.col
     li.n-header.col
       ul.row
-        li.n-col-name(v-for="key, idx in  columnNames" :key="`n-col-name-${idx}`" @click="hideColumn(key)")
+        li.n-col-name(
+          v-for="key, idx in  columnNames" 
+          :key="`n-col-name-${idx}`" 
+          @click="hideColumn(key)")
           h3 {{ key }}
       ul.row
-        li.n-col-name-hidden(v-for="colName, idx in columnsHidden" :key="`n-col-name-hidden-${idx}`" @click="showColumn(idx)")
+        li.n-col-name-hidden(
+          v-for="colName, idx in columnsHidden" 
+          :key="`n-col-name-hidden-${idx}`" 
+          @click="showColumn(idx)")
           p {{ colName }}
-    li.n-item(v-for="item, idx in items" :key="`n-item-${item.id}-${idx}`")
+    li.n-item(
+      v-for="item, idx in items" 
+      :key="`n-item-${item.id}`")
       ul.row
-        li.n-col-value.col(v-for="key, idx in columnNames" :key="`n-key-${item.id}-${key}`")
-          .n-value(@click.shift="toggleMenu(item.id, key)" @click="$emit('valueClick', {id: item.id, key})") 
+        li.n-col-value.col(
+          v-for="key, idx in columnNames" 
+          :key="`n-key-${item.id}-${key}`")
+          .n-value(
+            @click.shift="toggleMenu(item.id, key)" 
+            @click="$emit('valueClick', {id: item.id, key})") 
             p {{ item[key] }}
           .n-menu.row(v-if="showAt === `${item.id}-${key}`")
             button.more(type="button" @click="toggleDetails(item.id, key)") more
@@ -45,8 +57,7 @@ export default {
   computed: {
     columnNames: function() {
       return Object.keys(this.items[0])
-        .filter(key => this.columnsHidden.indexOf(key) === -1)
-        .filter(k => !/\$/.test(k));
+        .filter(key => this.columnsHidden.indexOf(key) === -1 && !/\$/.test(key))
     }
   },
   methods: {
@@ -107,15 +118,14 @@ export default {
 }
 .n-menu {
   position: absolute;
-  top: -3vh;
-  right: 5vw;
+  top: -100%;
+  right: 0;
   background: #333;
   border-radius: 3px;
 }
 .n-edit {
   position: absolute;
-  top: -110%;
-  left: 0;
+  top: -100%;
   right: 0;
 }
 </style>
