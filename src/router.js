@@ -17,9 +17,9 @@ export default new Router({
       path: '/concerts',
       name: 'concerts',
       // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
+      // this generates a separate chunk (concert.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/Concert.vue')
+      component: () => import(/* webpackChunkName: "concert" */ './views/Concert.vue')
     },
     {
       path: '/about',

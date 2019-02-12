@@ -1,21 +1,17 @@
-import { Model } from '@vuex-orm/core'
-import Friend from './Person'
 import Venue from './Venue'
+import { Model } from '@vuex-orm/core'
 
 export default class Concert extends Model {
   static entity = 'concerts'
+  static eagerLoad = ['venue']
 
   static fields() {
     return {
-      id: this.attr(null),
+      id: this.attr(Date.now()),
       date: this.attr(null),
-      info: this.string('').nullable(),
-      venueId: this.attr(),
-      venue: this.belongsTo(Venue, 'venueId'),
-      guests: this.hasMany(Friend, 'id', 'friendIds')
+      venueId: this.attr(null),
+      venue: this.belongsTo(Venue, 'venueId')
+      // infos: this.morphToMany(Info).nullable()
     }
   }
-  // get venue() {
-  //   return Venue.query().find(this.venueId || 1)
-  // }
 }

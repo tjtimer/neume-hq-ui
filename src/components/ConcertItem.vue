@@ -1,7 +1,6 @@
 <template lang="pug">
 .concert-item
-  .date
-    h3 {{ concert.date }}
+  h3.date {{ concert.date }}
   p.venue
     span.name {{ concert.venue.name }}
     span.city {{ concert.venue.city }}

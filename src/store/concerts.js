@@ -2,7 +2,7 @@ import Concert from './Concert'
 
 export default {
   state: {
-    fetched: false,
+    isReady: false,
     isFetching: false,
     sortAscending: true,
     sortBy: '',
@@ -10,39 +10,30 @@ export default {
     filterActive: []
   },
   actions: {
-    init(store) {
-      const venues = [
-        {
-          id: 1,
-          name: 'CBGB',
-          city: 'New York'
-        }
-      ]
-      const concerts = [
-        {
-          id: 1,
-          date: new Date(Date.now()),
-          venue: venues[0]
-        },
-        {
-          id: 2,
-          date: new Date('2019-04-04'),
-          venue: venues[0]
-        }
-      ]
-      Concert.create({ data: concerts })
+    async init(store) {
+      await store.dispatch('load')
+      store.commit('ready')
+    },
+    async load(store) {
+      store.commit('fetch')
+      await Concert.fetch()
+      store.commit('fetched')
+    },
+    async create(store, data) {
+      const concert = new Concert({ ...data })
+      concert.$save()
+      await concert.$persist()
     }
   },
   mutations: {
+    ready(state) {
+      state.isReady = true
+    },
     fetching(state) {
       state.isFetching = true
     },
     fetched(state) {
       state.isFetching = false
-      state.fetched = true
-    },
-    toggleSortDirection(state) {
-      state.sortAscending = !state.sortAscending
     }
   }
 }

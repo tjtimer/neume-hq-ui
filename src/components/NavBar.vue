@@ -31,10 +31,10 @@ export default {
     padding: 3vw;
     a {
       font-weight: bold;
-      font-size: 2.5vw;
+      font-size: 3.5vw;
       text-transform: capitalize;
-      line-height: 2.8vw;
-      padding: 0.2vw;
+      line-height: 4.25vw;
+      padding: 0.75vw;
       &:hover {
         animation: shine 1s linear 0s infinite alternate;
       }

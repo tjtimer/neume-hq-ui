@@ -9,7 +9,8 @@ export default class Info extends Model {
       id: this.attr(null),
       title: this.string(''),
       body: this.string(''),
-      creator: this.belongsTo(Person)
+      creatorId: this.attr(null),
+      creator: this.belongsTo(Person, 'creatorId')
     }
   }
 }

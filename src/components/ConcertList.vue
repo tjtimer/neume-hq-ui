@@ -1,29 +1,70 @@
 <template lang="pug">
-#concert-list
+#concert-list.col
   h3 Concerts
-  concert-item(v-for="(concert, idx) in concerts" :concert="concert" :key="idx")
+  n-table.concert-list.col(
+    v-if="concerts.length > 0"
+    :items="concerts"
+    @valueClick="valueClick" 
+    @updateValue="updateConcert")
 </template>
 
 <script>
-import ConcertItem from './ConcertItem'
-import Concert from '../store/Concert'
+import NTable from "./NTable";
+import Concert from "../store/Concert";
+import Venue from "../store/Venue";
 
 export default {
-  name: 'concert-list',
-  components: { ConcertItem },
+  name: "concert-list",
+  components: { NTable },
+  data() {
+    return {
+      venueDetailsAt: []
+    };
+  },
   computed: {
-    concerts() {
-      const cs = Concert.query().with('venue').all()
-      console.log(cs)
-      return cs
+    concerts: () => Concert
+                      .query()
+                      .orderBy('date', 'asc')
+                      .with('venue')
+                      .all().map((c) => {
+                        if (c.venueId != null) {
+                          return {
+                            ...c,
+                            venue: c.venue.name
+                          }
+                        }
+                        return {...c, venue: 'none'}
+                      })
+  },
+  methods: {
+    valueClick: function({ id, key }) {
+      console.log(id, key);
+      if (key === "venue") {
+        if (this.venueDetailsAt.indexOf(id) < 0) {
+          this.venueDetailsAt = [...this.venueDetailsAt, id];
+        } else {
+          const idx = this.venueDetailsAt.indexOf(id);
+          this.venueDetailsAt = [
+            ...this.venueDetailsAt.slice(0, idx),
+            ...this.venueDetailsAt.slice(idx + 1)
+          ];
+        }
+      }
+    },
+    updateConcert: async function({ id, key, value }) {
+      const concert = new Concert({id, [key]: value})
+      await concert.$save()
+      await concert.$push()
     }
   },
   beforeCreate() {
-    Concert.dispatch('init')
+    Concert.dispatch("init");
   }
-}
+};
 </script>
 
-<style scoped>
-
+<style lang="scss">
+.concert-list {
+  color: #5df;
+}
 </style>
