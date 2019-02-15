@@ -25,7 +25,7 @@ import { formatError } from '@vuex-orm/plugin-graphql'
             @click.shift="toggleMenu(item.id, key)" 
             @click="$emit('valueClick', {id: item.id, key})") 
             p {{ item[key] }}
-          .n-menu.row(v-if="showAt === `${item.id}-${key}`")
+          .n-menu.col(v-if="showAt === `${item.id}-${key}`")
             button.more(type="button" @click="toggleDetails(item.id, key)") more
             button.edit(type="button" @click="toggleEdit(item, key)") edit
             button.close(type="button" @click="toggleMenu") close
@@ -44,7 +44,7 @@ import { formatError } from '@vuex-orm/plugin-graphql'
 <script>
 export default {
   name: "n-table",
-  props: ["items"],
+  props: ["items", "type"],
   data: () => {
     return {
       showAt: "",
@@ -101,6 +101,10 @@ export default {
     toggleItemForm: function() {
       this.showForm = !this.showForm
     }
+  },
+  mounted() {
+    console.log(this)
+    console.log(this.type)
   }
 };
 </script>

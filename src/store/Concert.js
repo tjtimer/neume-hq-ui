@@ -9,8 +9,7 @@ export default class Concert extends Model {
     return {
       id: this.attr(Date.now()),
       date: this.attr(null),
-      venueId: this.attr(null),
-      venue: this.belongsTo(Venue, 'venueId')
+      venue: this.hasOne(Venue)
       // infos: this.morphToMany(Info).nullable()
     }
   }

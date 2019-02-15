@@ -28,7 +28,7 @@ export default {
                       .orderBy('date', 'asc')
                       .all()
                       .map((c) => {
-                        if (c.venueId != null) {
+                        if (c.venue !== null) {
                           return {
                             ...c,
                             venue: c.venue.name

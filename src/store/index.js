@@ -6,6 +6,7 @@ import VuexORMGraphQL from '@vuex-orm/plugin-graphql'
 import Concert from './Concert'
 import concerts from './concerts'
 import Contact from './Contact'
+import Event from './Event'
 import Venue from './Venue'
 import venues from './venues'
 import Person from './Person'
@@ -20,10 +21,16 @@ const database = new VuexORM.Database()
 database.register(Person, people)
 database.register(Friend)
 database.register(Contact)
+database.register(Event)
 database.register(Concert, concerts)
 database.register(Venue, venues)
 
-VuexORM.use(VuexORMGraphQL, { database, debug: true, connectionQueryMode: 'plain' })
+VuexORM.use(
+  VuexORMGraphQL,
+  {database, 
+   debug: true,
+   connectionQueryMode: 'plain' }
+)
 VuexORM.use(TJsDB, { database })
 
 const store = new Vuex.Store({
